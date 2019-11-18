@@ -1,0 +1,32 @@
+version: '3'
+
+networks: 
+  default:
+    driver: bridge
+    ipam:
+      driver: default
+      config:
+      - subnet: 192.168.3.0/24
+
+volumes:
+
+services:
+
+  dotnet:
+    build: api
+    container_name: dotnet
+    ports:
+      - 80:80
+    networks:
+      - default
+
+  nginx:
+    image: nginx
+    container_name: nginx
+    restart: 'no'
+    ports:
+      - 8080:80
+    volumes:
+      - ./front/public:/usr/share/nginx/html
+    networks: 
+      - default
