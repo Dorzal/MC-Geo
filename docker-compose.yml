@@ -9,6 +9,8 @@ networks:
       - subnet: 192.168.3.0/24
 
 volumes:
+  pgdata:
+    driver: local
 
 services:
 
@@ -29,4 +31,20 @@ services:
     volumes:
       - ./front/public:/usr/share/nginx/html
     networks: 
+      - default
+
+  postgres:    
+    container_name: postgres
+    build: .docker/postgres
+    restart: 'no'
+    ports:
+      - '5433:5432'
+    volumes:
+      - pgdata:${PSQL_PGDATA}
+    environment:
+      POSTGRES_DB: ${PSQL_DATABASE}
+      POSTGRES_USER: ${PSQL_USER}
+      POSTGRES_PASSWORD: ${PSQL_PASSWORD}
+      PGDATA: ${PSQL_PGDATA}
+    networks:
       - default
