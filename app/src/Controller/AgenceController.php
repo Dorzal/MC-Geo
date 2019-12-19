@@ -24,9 +24,30 @@ class AgenceController extends AbstractController
      */
     public function localiser(Request $request) {
 
-        $data = json_decode($request->getContent());
-        $latitudeUser = $data->{"latitude"};
-        $longitudeUser = $data->{"longitude"};
+        $curl = curl_init();
+
+        curl_setopt_array($curl, array(
+            CURLOPT_URL => "https://koumoul.com/s/geocoder/api/v1/coords",
+            CURLOPT_RETURNTRANSFER => true,
+            CURLOPT_ENCODING => "",
+            CURLOPT_MAXREDIRS => 10,
+            CURLOPT_TIMEOUT => 30,
+            CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+            CURLOPT_CUSTOMREQUEST => "POST",
+            CURLOPT_POSTFIELDS => $request->getContent(),
+            CURLOPT_HTTPHEADER => array(
+                "content-type: application/json"
+            ),
+        ));
+
+        $response = curl_exec($curl);
+
+        curl_close($curl);
+
+        $data = json_decode($response)[0];
+
+        $latitudeUser = $data->lat;
+        $longitudeUser = $data->lon;
 
         $agences = $this->_em->getRepository(Agence::class)->findAll();
 
