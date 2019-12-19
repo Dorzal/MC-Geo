@@ -23,9 +23,13 @@ class AgenceController extends AbstractController
      */
     public function localiser(Request $request) {
 
-        $truc = $request->getContent();
+        $data = json_decode($request->getContent());
+        $data->{"adresse"};
 
-        return new Response($truc);
+
+
+
+
     }
 
 }

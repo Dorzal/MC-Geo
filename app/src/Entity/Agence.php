@@ -37,9 +37,14 @@ class Agence
     private $ville;
 
     /**
-     * @ORM\Column(type="string", length=255)
+     * @ORM\Column(type="float")
      */
-    private $coordonee;
+    private $latitude;
+
+    /**
+     * @ORM\Column(type="float")
+     */
+    private $longitude;
 
     public function getId(): ?int
     {
@@ -94,14 +99,26 @@ class Agence
         return $this;
     }
 
-    public function getCoordonee(): ?string
+    public function getLatitude(): ?float
     {
-        return $this->coordonee;
+        return $this->latitude;
     }
 
-    public function setCoordonee(string $coordonee): self
+    public function setLatitude(float $latitude): self
     {
-        $this->coordonee = $coordonee;
+        $this->latitude = $latitude;
+
+        return $this;
+    }
+
+    public function getLongitude(): ?float
+    {
+        return $this->longitude;
+    }
+
+    public function setLongitude(float $longitude): self
+    {
+        $this->longitude = $longitude;
 
         return $this;
     }
