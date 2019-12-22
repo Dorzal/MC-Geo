@@ -19,7 +19,7 @@ services:
     container_name: nginx
     restart: 'no'
     ports:
-      - '80:80'
+      - '82:80'
     volumes:
       - ${SYMFONY_APP_PATH}:/var/www
       - .docker/nginx/conf:/etc/nginx/conf.d
